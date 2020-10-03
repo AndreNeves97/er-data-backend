@@ -1,7 +1,6 @@
 
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
 export class UserCreateDto {
   @Column()
   first_name: string;

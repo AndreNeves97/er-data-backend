@@ -49,6 +49,14 @@ export class UsersService {
     return this.repository.findOne(id);
   }
 
+  async findOneByFirebaseUid(uid: string): Promise<User> {
+    return this.repository.findOne({
+      where: [
+        {firebase_uid: uid}
+      ]
+    });
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     const {
       first_name,

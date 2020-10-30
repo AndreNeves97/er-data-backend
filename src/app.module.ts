@@ -1,33 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './domain/users/users.entity';
-import { UsersModule } from './domain/users/user.module';
-import { DeviceDataModule } from './domain/device-messages/device-data.module';
-import { DeviceData } from './domain/device-messages/device-data.entity';
-import { DeviceModule } from './domain/devices/device.module';
+import { DomainModule } from './domain/domain.module';
+import { User } from './domain/users/entities/user.entity';
+import { UsersService } from './domain/users/users.service';
+import { AuthorizationGuard } from './shared/guards/authorization.guard';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'erdata',
-      entities: [User, DeviceData],
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
-    UsersModule,
-    DeviceDataModule,
-    DeviceModule
+    DomainModule,
   ],
-  exports: [TypeOrmModule],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    { provide: APP_GUARD, useClass: AuthorizationGuard },
+    UsersService
+  ]
 })
 export class AppModule {}

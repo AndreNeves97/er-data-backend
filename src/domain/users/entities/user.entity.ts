@@ -1,6 +1,5 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { Device } from 'src/domain/devices/device.entity';
+import { Device } from 'src/domain-old/devices/device.entity';
 
 export enum UserStatus {
   ACTIVE = "active",
@@ -41,7 +40,7 @@ export class User {
   status: UserStatus;
 
 
-  @ManyToMany(type => Device)
-  @JoinTable({name: 'users_devices'})
-  favorite_devices: Device[];
+  // @ManyToMany(type => Device)
+  // @JoinTable({name: 'users_devices'})
+  // favorite_devices: Device[];
 }

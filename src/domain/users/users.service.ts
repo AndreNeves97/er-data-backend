@@ -15,28 +15,11 @@ export class UsersService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
 
-    const {
-      first_name,
-      last_name,
-      email,
-      image,
-      firebase_uid,
-      birth_date
-    } = createUserDto;
-
-    
     Object.assign(user, {
-      first_name,
-      last_name,
-      email,
-      image,
-      firebase_uid,
-      birth_date
+      ...createUserDto,
+      register_date: new Date(),
+      status: UserStatus.ACTIVE
     });
-
-    
-    user.register_date = new Date();
-    user.status = UserStatus.ACTIVE;
 
     return await this.repository.save(user);
   }
@@ -49,7 +32,7 @@ export class UsersService {
     return this.repository.findOne(id);
   }
 
-  async findOneByFirebaseUid(uid: string): Promise<User> {
+  findOneByFirebaseUid(uid: string): Promise<User> {
     return this.repository.findOne({
       where: [
         {firebase_uid: uid}
@@ -58,23 +41,6 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    const {
-      first_name,
-      last_name,
-      image,
-      birth_date
-    } = updateUserDto;
-
-    updateUserDto = new UpdateUserDto();
-
-    Object.assign(updateUserDto, {
-      first_name,
-      last_name,
-      image,
-      birth_date
-    });
-
-
     return this.repository.update(id, updateUserDto);
   }
 

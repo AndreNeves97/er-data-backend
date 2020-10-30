@@ -30,10 +30,11 @@ export class UsersController {
     return user;
   }
 
-  // @Put(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    await this.usersService.update(+id, updateUserDto);
+    return this.usersService.findOne(+id);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

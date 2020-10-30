@@ -1,15 +1,19 @@
-import { Column } from 'typeorm';
+import { IsString, IsDate, IsOptional } from 'class-validator';
 
 export class UpdateUserDto {
-  @Column()
+  @IsString()
+  @IsOptional()
   first_name: string;
 
-  @Column()
+  @IsString()
+  @IsOptional()
   last_name: string;
 
-  @Column({ nullable: true })
+  @IsString()
+  @IsOptional()
   image: string;
 
-  @Column({ nullable: true })
+  @IsDate()
+  @IsOptional() 
   birth_date: Date;
 }

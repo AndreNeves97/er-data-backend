@@ -1,11 +1,23 @@
-import { Column } from 'typeorm';
-import { PartialType } from '@nestjs/mapped-types';
-import { UpdateUserDto } from './update-user.dto';
+import { IsEmail, IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator';
 
-export class CreateUserDto extends PartialType(UpdateUserDto) {
-  @Column()
+export class CreateUserDto {
+  @IsNotEmpty()
+  first_name: string;
+  
+  @IsNotEmpty()
+  last_name: string;
+
+  @IsEmail()
   email: string;
 
-  @Column()
+  @IsNotEmpty()
   firebase_uid: string;
+
+  @IsString()
+  @IsOptional()
+  image: string;
+
+  @IsDate()
+  @IsOptional()
+  birth_date: Date;
 }

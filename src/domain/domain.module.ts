@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
-import { DevicesModule } from './devices/devices.module';
 import { StationsModule } from './stations/stations.module';
+import { VariablesModule } from './variables/variables.module';
+import { Variable } from './variables/entities/variable.entity';
+import { RulesModule } from './rules/rules.module';
 
 @Module({
   imports: [
@@ -15,14 +17,16 @@ import { StationsModule } from './stations/stations.module';
       password: '',
       database: 'erdata',
       entities: [
-        User
+        User,
+        Variable
       ],
       synchronize: true,
       autoLoadEntities: true,
     }),
     UsersModule,
-    DevicesModule,
-    StationsModule
+    StationsModule,
+    VariablesModule,
+    RulesModule
   ],
   exports: [
     TypeOrmModule,

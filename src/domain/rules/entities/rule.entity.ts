@@ -1,15 +1,19 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { AbstractModel } from "src/shared/models/abstract-entity.model";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RuleVariable } from "./rule-variable";
 
 @Entity()
-export class Rule {
+export class Rule extends AbstractModel<Rule> {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
-  name: string;
+  name?: string;
 
-
-  // rules_variables: RuleVariable[];
+  @OneToMany(type => RuleVariable, rule_variable => rule_variable.rule, {
+    eager: true
+  })
+  rule_variables?: RuleVariable[];
 
   
   // rules_variables: RuleVariable[];

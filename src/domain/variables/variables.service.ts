@@ -26,10 +26,10 @@ export class VariablesService {
   }
 
   update(id: number, updateVariableDto: UpdateVariableDto) {
-    this.repository.update(id, updateVariableDto);
+    return this.repository.update(id, updateVariableDto);
   }
 
-  remove(id: number) {
-    this.repository.delete(id);
+  async remove(id: number) {
+    await this.repository.delete(id);
   }
 }

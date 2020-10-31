@@ -1,23 +1,28 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { RuleVariable } from "src/domain/rules/entities/rule-variable";
+import { AbstractModel } from "src/shared/models/abstract-entity.model";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Variable {
+export class Variable extends AbstractModel<Variable> {
   @PrimaryGeneratedColumn()
   id: number;
   
   @Column()
-  name: string
+  name?: string
 
   @Column()
-  unity: string
+  unity?: string
 
   @Column()
-  min_value: number
+  min_value?: number
 
   @Column()
-  max_value: number
+  max_value?: number
 
-  equals(object: Variable) {
+  @OneToMany(type => RuleVariable, rule_variable => rule_variable.variable)
+  rule_variables?: RuleVariable[];
+
+  equals?(object: Variable) {
     if(this === object) return true;
     if(this.id === object.id) return true;
     

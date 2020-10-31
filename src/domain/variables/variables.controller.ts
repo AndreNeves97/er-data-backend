@@ -24,7 +24,7 @@ export class VariablesController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateVariableDto: UpdateVariableDto) {
-    this.variablesService.update(+id, updateVariableDto);
+    await this.variablesService.update(+id, updateVariableDto);
     return this.variablesService.findOne(+id);
   }
 

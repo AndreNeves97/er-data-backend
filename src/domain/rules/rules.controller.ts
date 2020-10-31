@@ -24,7 +24,7 @@ export class RulesController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateRuleDto: UpdateRuleDto) {
-    this.rulesService.update(+id, updateRuleDto);
+    await this.rulesService.update(+id, updateRuleDto);
     return this.rulesService.findOne(+id);
   }
 

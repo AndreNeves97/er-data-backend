@@ -10,6 +10,7 @@ import { RuleVariable } from './entities/rule-variable.entity';
     TypeOrmModule.forFeature([Rule, RuleVariable])
   ],
   controllers: [RulesController],
-  providers: [RulesService]
+  providers: [RulesService],
+  exports: [RulesService]
 })
 export class RulesModule {}

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { StationsService } from '../stations/stations.service';
 import { CreateStationMessageDto } from './dto/create-station-message.dto';
 import { StationMessageVariableData } from './entities/station-message-variable-data.entity';
 import { StationMessage } from './entities/station-message.entity';
@@ -12,15 +13,17 @@ export class StationMessagesService {
     private repository: Repository<StationMessage>,
 
     @InjectRepository(StationMessageVariableData)
-    private messageVariableDataRepository: Repository<StationMessageVariableData>
+    private messageVariableDataRepository: Repository<StationMessageVariableData>,
+
+    private stationsService: StationsService
   ) {}
 
 
   async create(createStationMessageDto: CreateStationMessageDto) {
+    await this.validateVariablesInInsertion(createStationMessageDto);
+
     const obj = await this.repository.save(createStationMessageDto);
     await this.insertMessageVariables(obj.id, createStationMessageDto.variables_data);
-
-    /// process rule boudaries values
 
     return obj;
   }
@@ -43,5 +46,22 @@ export class StationMessagesService {
       });
   
     return await Promise.all(promises);
+  }
+
+  async validateVariablesInInsertion(createStationMessageDto: CreateStationMessageDto) {
+    const station = await this.stationsService.findOneWithRule(createStationMessageDto.station.id);
+    const rule = station.rule;
+
+    const variables_out_rule = rule.analyzeVariablesValuesOutOfRule(createStationMessageDto.variables_data);
+    
+    createStationMessageDto
+      .variables_data 
+      .forEach(variable_data => {
+        const index = variables_out_rule.findIndex(rule => rule.isRuleOfVariable(variable_data.variable))
+        
+        if(index < 0) {
+          variable_data.inside_the_limits = true;
+        }
+      });
   }
 }

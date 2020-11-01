@@ -20,4 +20,7 @@ export class StationMessageVariableData extends AbstractModel<StationMessageVari
 
   @Column()
   value?: number
+
+  @Column({ default: false })
+  inside_the_limits: boolean
 }

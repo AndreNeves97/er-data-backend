@@ -48,6 +48,22 @@ export class StationsService {
       .getOne();
   }
 
+  findOneWithRule(id: number) {
+    return this.repository
+      .createQueryBuilder('station')
+      .where({id})
+      .select([
+        'station',
+        'rule',
+        'rule_variables',
+        'variable'
+      ])
+      .leftJoin('station.rule', 'rule')
+      .leftJoin('rule.rule_variables', 'rule_variables')
+      .leftJoin('rule_variables.variable', 'variable')
+      .getOne();
+  }
+
   async update(id: number, updateStationDto: UpdateStationDto) {
     return this.repository.save({
       id,

@@ -30,4 +30,8 @@ export class RuleVariable extends AbstractModel<RuleVariable> {
             value < this.variable.min_value ||
             value > this.variable.max_value
   }
+
+  isRuleOfVariable(variable: Variable) {
+    return this.variable.equals(variable);
+  }
 }

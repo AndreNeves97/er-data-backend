@@ -8,8 +8,9 @@ export class RulesController {
   constructor(private readonly rulesService: RulesService) {}
   
   @Post()
-  create(@Body() createRuleDto: CreateRuleDto) {
-    return this.rulesService.create(createRuleDto);
+  async create(@Body() createRuleDto: CreateRuleDto) {
+    const obj = await this.rulesService.create(createRuleDto);
+    return this.rulesService.findOne(obj.id);
   }
 
   @Get()

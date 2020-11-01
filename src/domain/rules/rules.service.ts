@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Variable } from '../variables/entities/variable.entity';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
-import { RuleVariable } from './entities/rule-variable';
+import { RuleVariable } from './entities/rule-variable.entity';
 import { Rule } from './entities/rule.entity';
 
 @Injectable()
@@ -19,10 +19,9 @@ export class RulesService {
 
   
   async create(createRuleDto: CreateRuleDto) {
-    await this.repository.save(createRuleDto);
-    await this.insertRulesVariables(createRuleDto['id'], createRuleDto.rule_variables);
-
-    return this.repository.findOne(createRuleDto['id']);
+    const obj = await this.repository.save(createRuleDto);
+    await this.insertRulesVariables(obj.id, createRuleDto.rule_variables);
+    return obj;
   }
 
   findAll() {

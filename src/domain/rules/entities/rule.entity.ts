@@ -1,6 +1,6 @@
 import { AbstractModel } from "src/shared/models/abstract-entity.model";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { RuleVariable } from "./rule-variable";
+import { RuleVariable } from "./rule-variable.entity";
 
 @Entity()
 export class Rule extends AbstractModel<Rule> {

@@ -1,4 +1,4 @@
-import { RuleVariable } from "src/domain/rules/entities/rule-variable";
+import { RuleVariable } from "src/domain/rules/entities/rule-variable.entity";
 import { Station } from "src/domain/stations/entities/station.entity";
 import { AbstractModel } from "src/shared/models/abstract-entity.model";
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";

@@ -12,7 +12,9 @@ export class RuleVariable extends AbstractModel<RuleVariable> {
   @JoinColumn({ name: "variable_id"})
   variable?: Variable
 
-  @ManyToOne(type => Rule, rule => rule.rule_variables, { primary: true })
+  @ManyToOne(type => Rule, rule => rule.rule_variables, {
+    primary: true
+  })
   @JoinColumn({ name: "rule_id"})
   rule?: Rule
 

@@ -1,5 +1,5 @@
-import { IsNumber, IsNotEmpty, IsString, IsDate, IsOptional, IsInstance, IsArray } from 'class-validator';
-import { RuleVariable } from '../entities/rule-variable';
+import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import { RuleVariable } from '../entities/rule-variable.entity';
 
 export class CreateRuleDto {
   @IsString()

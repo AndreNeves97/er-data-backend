@@ -1,13 +1,12 @@
-import { RuleVariable } from "src/domain/rules/entities/rule-variable";
 import { Rule } from "src/domain/rules/entities/rule.entity";
+import { StationMessage } from "src/domain/station-messages/entities/station-message.entity";
 import { User } from "src/domain/users/entities/user.entity";
 import { Variable } from "src/domain/variables/entities/variable.entity";
 import { AbstractModel } from "src/shared/models/abstract-entity.model";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-
 @Entity()
-export class Station {
+export class Station extends AbstractModel<Station> {
   @PrimaryGeneratedColumn()
   id?: number;
 
@@ -26,7 +25,8 @@ export class Station {
   @Column()
   coord_long?: string;
 
-  @ManyToOne(type => Rule)
+  @ManyToOne(type => Rule, {nullable: false})
+  @JoinColumn({ name: "rule_id"})
   rule?: Rule
 
   @ManyToMany(type => Variable, variable => variable.stations)
@@ -37,6 +37,12 @@ export class Station {
   })
   variables?: Variable[];
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, {
+    eager: true
+  })
+  @JoinColumn({ name: "owner_id"})
   owner?: User;
+
+  @OneToMany(type => StationMessage, station_message => station_message.station)
+  messages?: StationMessage;
 }

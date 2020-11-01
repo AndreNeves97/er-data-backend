@@ -26,9 +26,26 @@ export class StationsService {
   }
 
   findOne(id: number) {
-    return this.repository.findOne(id, {
-      relations: ['owner', 'variables', 'rule']
-    });
+    return this.repository
+      .createQueryBuilder('station')
+      .where({id})
+      .select([
+        'station',
+        'owner',
+        'rule',
+        'variables',
+        'messages',
+        'variables_data',
+        'variable.id'
+      ])
+      .leftJoin('station.owner', 'owner')
+      .leftJoin('station.rule', 'rule')
+      .leftJoin('station.variables', 'variables')
+      .leftJoin('station.messages', 'messages')
+      .leftJoin('messages.variables_data', 'variables_data')
+      .leftJoin('variables_data.variable', 'variable')
+      .orderBy('messages.date')
+      .getOne();
   }
 
   async update(id: number, updateStationDto: UpdateStationDto) {

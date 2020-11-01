@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { Device } from 'src/domain-old/devices/device.entity';
 
 export enum UserStatus {
   ACTIVE = "active",

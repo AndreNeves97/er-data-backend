@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { UsersService } from 'src/domain/users/users.service';
-import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { AuthorizationUserNotFoundException } from '../exceptions/authorization-user-not-found.exception';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -23,7 +23,7 @@ export class AuthorizationGuard implements CanActivate {
     const user = await this.userService.findOneByFirebaseUid(authHeader);
     
     if(!user) {
-      throw new UserNotFoundException();
+      throw new AuthorizationUserNotFoundException();
     }
 
     req['user'] = user;

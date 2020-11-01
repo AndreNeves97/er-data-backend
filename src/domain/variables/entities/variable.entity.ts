@@ -1,6 +1,7 @@
 import { RuleVariable } from "src/domain/rules/entities/rule-variable";
+import { Station } from "src/domain/stations/entities/station.entity";
 import { AbstractModel } from "src/shared/models/abstract-entity.model";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Variable extends AbstractModel<Variable> {
@@ -21,6 +22,9 @@ export class Variable extends AbstractModel<Variable> {
 
   @OneToMany(type => RuleVariable, rule_variable => rule_variable.variable)
   rule_variables?: RuleVariable[];
+
+  @ManyToMany(type => Station, station => station.variables)
+  stations?: Station[];
 
   equals?(object: Variable) {
     if(this === object) return true;

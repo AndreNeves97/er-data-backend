@@ -12,15 +12,11 @@ import { StationMessagesModule } from './station-messages/station-messages.modul
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'eu-cdbr-west-03.cleardb.net',
       port: 3306,
-      username: 'root',
-      password: '',
-      database: 'erdata',
-      entities: [
-        User,
-        Variable
-      ],
+      username: 'b4e56112054ab0',
+      password: 'b7732892',
+      database: 'heroku_699e15c36cbc031',
       synchronize: true,
       autoLoadEntities: true,
     }),

@@ -14,10 +14,10 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  // @Get()
-  // findAll(): Promise<User[]> {
-  //   return this.usersService.findAll();
-  // }
+  @Get()
+  findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

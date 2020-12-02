@@ -74,4 +74,27 @@ export class StationsService {
   async remove(id: number) {
     await this.repository.delete(id);
   }
+
+  async insertUserFavorited(id: number, user: User) {
+    const station = await this.repository.findOneOrFail(id, {
+      relations: ['users_favorited']
+    });
+
+    station.users_favorited.push(user);
+    return this.repository.save(station);
+  }
+
+  async findByFavoritedUser(user: User) {
+    console.log(user)
+
+    return this.repository
+      .createQueryBuilder('station')
+      .select([
+        'station'
+      ])
+      .innerJoin('station.users_favorited', 'user', 'user.id = :id', {
+        id: user.id
+      })
+      .getMany();
+  }
 }

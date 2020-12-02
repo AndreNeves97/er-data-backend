@@ -1,3 +1,4 @@
+import { Station } from 'src/domain/stations/entities/station.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 export enum UserStatus {
@@ -38,8 +39,12 @@ export class User {
   })
   status: UserStatus;
 
+  @ManyToMany(type => Station, station => station.users_favorited)
+  @JoinTable({
+    name: 'favorite_stations', 
+    joinColumn: {name: 'user_id'},
+    inverseJoinColumn: {name: 'station_id'}
+  })
+  favorite_stations?: Station[];
 
-  // @ManyToMany(type => Device)
-  // @JoinTable({name: 'users_devices'})
-  // favorite_devices: Device[];
 }

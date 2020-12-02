@@ -4,10 +4,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Request } from 'express';
+import { StationsService } from '../stations/stations.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly stationsService: StationsService
+  ) {}
   
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -25,9 +29,13 @@ export class UsersController {
   // }
 
   @Get('/current')
-  findCurrentUser(@Req() request: Request) {
+  async findCurrentUser(@Req() request: Request) {
     const user = request['user'];
-    return user;
+
+    return {
+      ...user,
+      favorite_stations: await this.stationsService.findByFavoritedUser(user)
+    };
   }
 
   @Put(':id')

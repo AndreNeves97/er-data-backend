@@ -43,6 +43,9 @@ export class Station extends AbstractModel<Station> {
   @JoinColumn({ name: "owner_id"})
   owner?: User;
 
+  @ManyToMany(type => User, user => user.favorite_stations)
+  users_favorited?: User[];
+
   @OneToMany(type => StationMessage, station_message => station_message.station)
   messages?: StationMessage;
 }

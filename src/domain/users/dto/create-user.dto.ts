@@ -11,6 +11,9 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
+  country?: string;
+
+  @IsNotEmpty()
   firebase_uid: string;
 
   @IsString()

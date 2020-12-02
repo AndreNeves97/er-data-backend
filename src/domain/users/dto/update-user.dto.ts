@@ -13,6 +13,10 @@ export class UpdateUserDto {
   @IsOptional()
   image: string;
 
+  @IsString()
+  @IsOptional()
+  country?: string;
+
   @IsDate()
   @IsOptional() 
   birth_date: Date;

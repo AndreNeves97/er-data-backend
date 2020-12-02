@@ -25,6 +25,9 @@ export class User {
   image: string;
 
   @Column()
+  country?: string;
+
+  @Column()
   firebase_uid: string;
 
   @Column({ nullable: true })

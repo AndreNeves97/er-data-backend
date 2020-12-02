@@ -51,4 +51,15 @@ export class StationsController {
 
     return this.stationsService.insertUserFavorited(+id, user);
   }
+  
+  @Delete(':id/favorite')
+  async deleteFavorite(@Param('id') id: string, @Req() request: Request) {
+    const user = request['user'];
+
+    if(!user) {
+      throw new ForbiddenException();
+    }
+
+    return this.stationsService.deleteUserFavorited(+id, user);
+  }
 }

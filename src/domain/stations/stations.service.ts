@@ -84,6 +84,18 @@ export class StationsService {
     return this.repository.save(station);
   }
 
+  async deleteUserFavorited(id: number, user: User) {
+    const station = await this.repository.findOneOrFail(id, {
+      relations: ['users_favorited']
+    });
+
+    station.users_favorited = station
+      .users_favorited
+      .filter(favorited_user => favorited_user.id !== user.id);
+
+    return this.repository.save(station);
+  }
+
   async findByFavoritedUser(user: User) {
     console.log(user)
 

@@ -19,7 +19,7 @@ export class NotificationsService {
   async sendVariableOutOfLimitsNotification(station: Station, variableData: StationMessageVariableData) {
     const message = 
       `A variável ${variableData.variable.id} da estação` + 
-      ` ${station.name} extrapolou o valor limite ` + 
+      ` ${station.name} extrapolou o valor limite. ` + 
       `(Valor recebido: ${variableData.value})`
     
     const notification = new Notification({

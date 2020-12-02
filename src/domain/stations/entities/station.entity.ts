@@ -1,3 +1,4 @@
+import { Notification } from "src/domain/notifications/entities/notification.entity";
 import { Rule } from "src/domain/rules/entities/rule.entity";
 import { StationMessage } from "src/domain/station-messages/entities/station-message.entity";
 import { User } from "src/domain/users/entities/user.entity";
@@ -48,4 +49,8 @@ export class Station extends AbstractModel<Station> {
 
   @OneToMany(type => StationMessage, station_message => station_message.station)
   messages?: StationMessage;
+
+
+  @OneToMany(type => Notification, notification => notification.station)
+  notifications?: Notification;
 }

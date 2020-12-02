@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StationMessage } from './entities/station-message.entity';
 import { StationMessageVariableData } from './entities/station-message-variable-data.entity';
 import { StationsModule } from '../stations/stations.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([StationMessage, StationMessageVariableData]),
-    StationsModule
+    StationsModule,
+    NotificationsModule
   ],
   controllers: [StationMessagesController],
   providers: [StationMessagesService]

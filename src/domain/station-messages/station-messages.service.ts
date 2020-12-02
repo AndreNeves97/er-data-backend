@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { NotificationsService } from '../notifications/notifications.service';
 import { StationsService } from '../stations/stations.service';
 import { CreateStationMessageDto } from './dto/create-station-message.dto';
 import { StationMessageVariableData } from './entities/station-message-variable-data.entity';
@@ -15,7 +16,8 @@ export class StationMessagesService {
     @InjectRepository(StationMessageVariableData)
     private messageVariableDataRepository: Repository<StationMessageVariableData>,
 
-    private stationsService: StationsService
+    private stationsService: StationsService,
+    private notificationsService: NotificationsService
   ) {}
 
 
@@ -24,6 +26,8 @@ export class StationMessagesService {
 
     const obj = await this.repository.save(createStationMessageDto);
     await this.insertMessageVariables(obj.id, createStationMessageDto.variables_data);
+
+    await this.sendNotifications(createStationMessageDto);
 
     return obj;
   }
@@ -48,6 +52,19 @@ export class StationMessagesService {
     return await Promise.all(promises);
   }
 
+  async sendNotifications(createStationMessageDto: CreateStationMessageDto) {
+    const station = await this
+      .stationsService
+      .findOne(createStationMessageDto.station.id);
+
+    const promises = createStationMessageDto
+      .variables_data
+      .filter(data => data.inside_the_limits === false)
+      .map(variableData => this.notificationsService.sendVariableOutOfLimitsNotification(station, variableData));
+
+    return Promise.all(promises);
+  }
+
   async validateVariablesInInsertion(createStationMessageDto: CreateStationMessageDto) {
     const station = await this.stationsService.findOneWithRule(createStationMessageDto.station.id);
     const rule = station.rule;
@@ -58,6 +75,8 @@ export class StationMessagesService {
       .variables_data 
       .forEach(variable_data => {
         const index = variables_out_rule.findIndex(rule => rule.isRuleOfVariable(variable_data.variable))
+        
+        variable_data.inside_the_limits = false;
         
         if(index < 0) {
           variable_data.inside_the_limits = true;

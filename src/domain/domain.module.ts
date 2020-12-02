@@ -7,6 +7,7 @@ import { VariablesModule } from './variables/variables.module';
 import { Variable } from './variables/entities/variable.entity';
 import { RulesModule } from './rules/rules.module';
 import { StationMessagesModule } from './station-messages/station-messages.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { StationMessagesModule } from './station-messages/station-messages.modul
     StationsModule,
     VariablesModule,
     RulesModule,
-    StationMessagesModule
+    StationMessagesModule,
+    NotificationsModule
   ],
   exports: [
     TypeOrmModule,

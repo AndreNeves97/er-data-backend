@@ -22,7 +22,7 @@ export class VariablesService {
   }
 
   findOne(id: number) {
-    return this.repository.findOne(id);
+    return this.repository.findOneOrFail(id);
   }
 
   update(id: number, updateVariableDto: UpdateVariableDto) {

@@ -13,7 +13,9 @@ export class Notification extends AbstractModel<Notification> {
   @Column()
   date?: Date;
 
-  @ManyToOne(type => Station, station =>  station.notifications, {nullable: false})
+  @ManyToOne(type => Station, station =>  station.notifications, {
+    nullable: false
+  })
   @JoinColumn({ name: "station_id"})
   station?: Station
 }

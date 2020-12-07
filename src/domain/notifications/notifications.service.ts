@@ -13,7 +13,15 @@ export class NotificationsService {
   ) {}
   
   async findAll() {
-    return this.repository.find();
+    return this.repository
+      .createQueryBuilder('notification')
+      .select([
+        'notification',
+        'station',
+      ])
+      .leftJoin('notification.station', 'station')
+      .orderBy('date', "ASC")
+      .getMany();
   }
 
   async sendVariableOutOfLimitsNotification(station: Station, variableData: StationMessageVariableData) {

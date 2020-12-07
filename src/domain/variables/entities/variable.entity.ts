@@ -14,10 +14,10 @@ export class Variable extends AbstractModel<Variable> {
   @Column()
   unity?: string
 
-  @Column()
+  @Column("double")
   min_value?: number
 
-  @Column()
+  @Column("double")
   max_value?: number
 
   @OneToMany(type => RuleVariable, rule_variable => rule_variable.variable)

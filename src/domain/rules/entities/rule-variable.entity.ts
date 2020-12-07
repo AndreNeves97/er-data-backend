@@ -18,10 +18,10 @@ export class RuleVariable extends AbstractModel<RuleVariable> {
   @JoinColumn({ name: "rule_id"})
   rule?: Rule
 
-  @Column()
+  @Column("double")
   min_value?: number
 
-  @Column()
+  @Column("double")
   max_value?: number
   
   isValueOutOfRule?(value: number): boolean {

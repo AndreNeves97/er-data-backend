@@ -18,7 +18,7 @@ export class StationMessageVariableData extends AbstractModel<StationMessageVari
   @JoinColumn({ name: "variable_id"})
   variable?: Variable
 
-  @Column()
+  @Column("double")
   value?: number
 
   @Column({ default: false })

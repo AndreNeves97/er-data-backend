@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { Notification } from "./entities/notification.entity";
 import { StationMessageVariableData } from '../station-messages/entities/station-message-variable-data.entity';
 import { Station } from 'src/domain/stations/entities/station.entity';
+import { VariablesService } from '../variables/variables.service';
 
 @Injectable()
 export class NotificationsService {
   constructor(
     @InjectRepository(Notification)
     private repository: Repository<Notification>,
+
+    private variablesService: VariablesService
   ) {}
   
   async findAll() {
@@ -24,11 +27,16 @@ export class NotificationsService {
       .getMany();
   }
 
-  async sendVariableOutOfLimitsNotification(station: Station, variableData: StationMessageVariableData) {
+  async sendVariableOutOfLimitsNotification(station, variableData: StationMessageVariableData) {
+    const variable = await this.variablesService.findOne(variableData.variable.id);
+
+
     const message = 
-      `A variável ${variableData.variable.id} da estação` + 
-      ` ${station.name} extrapolou o valor limite. ` + 
-      `(Valor recebido: ${variableData.value})`
+      `The variable ${variable.name} (Id: ${variable.id})` + 
+      ` exceded the limit value.` + 
+      ` (Received value: ${variableData.value}` + 
+      `${variable.unity === 'N/A'? '' : variable.unity}` + 
+      `)`
     
     const notification = new Notification({
       station,

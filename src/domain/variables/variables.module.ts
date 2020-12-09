@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [TypeOrmModule.forFeature([Variable])],
   controllers: [VariablesController],
-  providers: [VariablesService]
+  providers: [VariablesService],
+  exports: [VariablesService]
 })
 export class VariablesModule {}

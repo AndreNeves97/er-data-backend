@@ -1,7 +1,7 @@
 
 ## Description
 
-ER Data is a solution that collects information about Water Quality in a river via an Arduino with a sensor and internet connnection, and shows the informations in a Mobile App.
+ER Data is a solution that collects information about Water Quality in a river via an Arduino with a sensor and internet connnection, and shows it in a Mobile App.
 
 This repository contains the API developed to store the data and provide it to the Mobile App.
 
